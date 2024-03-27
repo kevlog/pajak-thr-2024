@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perhitungan Pajak</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<form id="taxForm">
+    <label for="gaji">Gaji:</label>
+    <input type="text" id="gaji" name="gaji" placeholder="Masukkan gaji">
+    
+    <label for="thr">THR:</label>
+    <input type="text" id="thr" name="thr" placeholder="Masukkan THR">
+    
+    <label for="total">Total:</label>
+    <input type="text" id="total" name="total" readonly>
+    
+    <label for="pphPercentage">Total PPH21 (%):</label>
+    <input type="text" id="pphPercentage" name="pphPercentage" placeholder="Masukkan total PPH21 (%)">
+    
+    <label for="totalPph">Total PPH21:</label>
+    <input type="text" id="totalPph" name="totalPph" readonly>
+    
+    <label for="pph">PPH Gaji:</label>
+    <input type="text" id="pph" name="pph" placeholder="Masukkan PPH Gaji">
+    
+    <label for="kekurangan">Kekurangan Payslip (THR):</label>
+    <input type="text" id="kekurangan" name="kekurangan" readonly>
+    
+    <input type="submit" value="Hitung">
+</form>
+
+<script>
+document.getElementById("taxForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var gaji = parseFloat(document.getElementById("gaji").value.replace(/[^\d.]/g, ''));
+    var thr = parseFloat(document.getElementById("thr").value.replace(/[^\d.]/g, ''));
+    var total = gaji + thr;
+    var pphPercentage = parseFloat(document.getElementById("pphPercentage").value);
+    var totalPph = (total * (pphPercentage / 100)).toFixed(2);
+    var pph = parseFloat(document.getElementById("pph").value.replace(/[^\d.]/g, ''));
+    var kekurangan = (totalPph - pph).toFixed(2);
+
+    document.getElementById("total").value = "Rp" + total.toLocaleString("id-ID");
+    document.getElementById("totalPph").value = "Rp" + totalPph.toLocaleString("id-ID");
+    document.getElementById("kekurangan").value = "Rp" + kekurangan.toLocaleString("id-ID");
+});
+</script>
+
+</body>
+</html>
